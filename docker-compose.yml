@@ -1,0 +1,32 @@
+services:
+  selenium-hub:
+    # Selenium Grid in Hub mode (acts as central server to triage test requests to Nodes) https://hub.docker.com/r/selenium/hub
+    image: selenium/hub:4.27.0
+    container_name: selenium-hub
+    ports:
+      # Map port 4444 on my local machine to port 4444 in the docker container
+      - "4444:4444"
+  chrome:
+    # Selenium Grid Node (i.e. Test Machine) with Chrome browser installed on it https://hub.docker.com/r/selenium/node-chrome
+    image: selenium/node-chrome:4.27.0
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      # selenium-hub service has to run first before chrome service can run
+      - selenium-hub
+    environment:
+      # Define environment variables that connect the chrome service to the selenium-hub service
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+  test-runner:
+    # Use image with Maven and Java version 17 to run tests https://hub.docker.com/_/maven
+    image: maven:3.9.9-eclipse-temurin-17
+    volumes:
+      - .:/app
+    working_dir: /app
+    # This command runs all lifecycle phases before it too (validate, compile, test). [Mvn compile] downloads POM dependencies
+    command: mvn test
+    depends_on:
+      - selenium-hub
+      - chrome

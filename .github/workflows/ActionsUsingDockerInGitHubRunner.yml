@@ -1,4 +1,4 @@
-name: Github Actions CI with Docker Containers
+name: Actions CI with Docker Containers inside GitHub's built in Runner
 
 on:
   push:
@@ -18,8 +18,9 @@ jobs:
           sudo chmod +x /usr/local/bin/docker-compose        
 
       - name: Start up Docker Services
-        run: docker-compose up --build -d
+        run: docker-compose up --build -d # Run in detached mode
 
+      # Need this extra step for GitHub Actions for some reason. When running locally, [docker-compose up --build] is enough to cover everything
       - name: Execute Tests
         run: docker-compose exec test-runner mvn test -Dbrowser=Firefox
 

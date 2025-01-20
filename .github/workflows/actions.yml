@@ -1,0 +1,25 @@
+name: Docker Compose CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Docker Compose
+        uses: docker/compose-action@v1
+        with:
+          compose-file: './docker-compose.yml'
+          up-flags: '--build --detach'
+
+      - name: Clean up
+        run: docker-compose down

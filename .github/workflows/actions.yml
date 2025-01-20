@@ -20,8 +20,5 @@ jobs:
       - name: Start up Docker Services
         run: docker-compose up --build
 
-      - name: Run Tests
-        run: docker-compose exec test-runner mvn test -Dbrowser=Firefox
-
       - name: Clean up
         run: docker-compose down

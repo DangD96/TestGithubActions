@@ -6,11 +6,6 @@ services:
     ports:
       # Map port 4444 on my local machine to port 4444 in the docker container
       - "4444:4444"
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: 1G
   chrome:
     # Selenium Grid Node (i.e. Test Machine) with Chrome browser installed on it https://hub.docker.com/r/selenium/node-chrome
     image: selenium/node-chrome:4.27.0
@@ -24,11 +19,6 @@ services:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: 1G
   edge:
     image: selenium/node-edge:4.27.0
     volumes:
@@ -39,11 +29,6 @@ services:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: 1G
   firefox:
     image: selenium/node-firefox:4.27.0
     volumes:
@@ -54,11 +39,6 @@ services:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: 1G
   test-runner:
     # Use image with Maven and Java version 17 to run tests https://hub.docker.com/_/maven
     image: maven:3.9.9-eclipse-temurin-17
@@ -72,8 +52,3 @@ services:
       - chrome
       - edge
       - firefox
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: 1G

@@ -1,4 +1,5 @@
-name: Actions CI with Docker Containers inside GitHub's built in Runner
+# Need extra Execute Tests step for GitHub Actions for some reason. When running locally, [docker-compose up --build] is enough to cover everything
+name: Actions CI with Docker
 
 on:
   push:
@@ -20,18 +21,8 @@ jobs:
       - name: Start up Docker Services
         run: docker-compose up --build -d # Run in detached mode
 
-      - name: Wait 30 seconds for services to finish starting up
-        run: sleep 30
-
-      - name: (PRE-TEST) Log memory usage
-        run: free -m
-
-      # Need this extra step for GitHub Actions for some reason. When running locally, [docker-compose up --build] is enough to cover everything
       - name: Execute Tests
         run: docker-compose exec test-runner mvn test -Dbrowser=Firefox
-
-      - name: (POST-TEST) Log memory usage
-        run: free -m
 
       - name: Clean up
         run: docker-compose down

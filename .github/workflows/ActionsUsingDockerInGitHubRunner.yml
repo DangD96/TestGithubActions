@@ -24,6 +24,7 @@ jobs:
 
       - name: Start up Docker Services
         run: docker-compose up --build
+        timeout-minutes: 2 # This step gets stuck infinitely in GitHub. Add timeout so can move to clean up step
 
       - name: Clean up
         run: docker-compose down

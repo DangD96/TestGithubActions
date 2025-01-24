@@ -23,11 +23,7 @@ jobs:
           sudo chmod +x /usr/local/bin/docker-compose        
 
       - name: Start up Docker Services
-        run: docker-compose up --build -d # Run in detached mode
-
-      # Need extra Execute Tests step for GitHub Actions for some reason. When running locally, [docker-compose up --build] is enough to cover everything
-      - name: Execute Tests
-        run: docker-compose exec test-runner mvn test
+        run: docker-compose up --build
 
       - name: Clean up
         run: docker-compose down

@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - master
+    paths:
+      # Only trigger workflow when pushing to master branch with changes to files under these directories and files
+      - 'src/**'
+      - '.github/workflows/**'
+      - 'docker-compose.yml'
 
 jobs:
   build:

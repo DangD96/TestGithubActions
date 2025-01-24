@@ -46,7 +46,7 @@ services:
       - .:/app
     working_dir: /app
     # This command runs all lifecycle phases before it too (validate, compile, test). [Mvn compile] downloads POM dependencies
-    command: mvn test -Dbrowser=Firefox
+    command: mvn test -Dbrowser=Chrome
     depends_on:
       - selenium-hub
       - chrome

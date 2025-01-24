@@ -23,8 +23,10 @@ jobs:
           sudo chmod +x /usr/local/bin/docker-compose        
 
       - name: Start up Docker Services
-        run: docker-compose up --build
-        timeout-minutes: 2 # This step gets stuck infinitely in GitHub. Add timeout so can move to clean up step
+        run: docker-compose up --build -d
+
+      - name: Run Tests
+        run: docker-compose exec test-runner mvn test
 
       - name: Clean up
         run: docker-compose down

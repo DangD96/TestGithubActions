@@ -27,7 +27,7 @@ jobs:
 
       # Need extra Execute Tests step for GitHub Actions for some reason. When running locally, [docker-compose up --build] is enough to cover everything
       - name: Execute Tests
-        run: docker-compose exec test-runner mvn test -Dbrowser=Firefox
+        run: docker-compose exec test-runner mvn test
 
       - name: Clean up
         run: docker-compose down

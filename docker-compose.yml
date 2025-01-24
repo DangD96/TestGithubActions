@@ -17,22 +17,6 @@ services:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-  edge:
-    image: selenium/node-edge:4.27.0
-    depends_on:
-      - selenium-hub
-    environment:
-      - SE_EVENT_BUS_HOST=selenium-hub
-      - SE_EVENT_BUS_PUBLISH_PORT=4442
-      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-  firefox:
-    image: selenium/node-firefox:4.27.0
-    depends_on:
-      - selenium-hub
-    environment:
-      - SE_EVENT_BUS_HOST=selenium-hub
-      - SE_EVENT_BUS_PUBLISH_PORT=4442
-      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
   test-runner:
     # Use image with Maven and Java version 17 to run tests https://hub.docker.com/_/maven
     image: maven:3.9.9-eclipse-temurin-17
@@ -40,9 +24,7 @@ services:
       - .:/app
     working_dir: /app
     # This command runs all lifecycle phases before it too (validate, compile, test). [Mvn compile] downloads POM dependencies
-    command: mvn test -Dbrowser=Chrome
+    command: mvn test
     depends_on:
       - selenium-hub
       - chrome
-      - edge
-      - firefox

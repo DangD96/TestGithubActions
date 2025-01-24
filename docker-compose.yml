@@ -9,8 +9,6 @@ services:
   chrome:
     # Selenium Grid Node (i.e. Test Machine) with Chrome browser installed on it https://hub.docker.com/r/selenium/node-chrome
     image: selenium/node-chrome:4.27.0
-    volumes:
-      - /dev/shm:/dev/shm
     depends_on:
       # selenium-hub service has to run first before chrome service can run
       - selenium-hub
@@ -21,8 +19,6 @@ services:
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
   edge:
     image: selenium/node-edge:4.27.0
-    volumes:
-      - /dev/shm:/dev/shm
     depends_on:
       - selenium-hub
     environment:
@@ -31,8 +27,6 @@ services:
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
   firefox:
     image: selenium/node-firefox:4.27.0
-    volumes:
-      - /dev/shm:/dev/shm
     depends_on:
       - selenium-hub
     environment:

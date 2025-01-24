@@ -20,8 +20,5 @@ jobs:
       - name: Start up Docker Services
         run: docker-compose up --build -d
 
-      - name: Run Tests
-        run:
-
       - name: Clean up
         run: docker-compose down
